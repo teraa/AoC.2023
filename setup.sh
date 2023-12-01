@@ -22,7 +22,7 @@ add() {
   curl "https://adventofcode.com/$year/day/$day/input" -H @.headers -sSL \
   | tee $prefix.{a,b}/input.txt 1> /dev/null
 
-  git add $prefix.{a,b}
+  git add $prefix.{a,b} *.sln
 }
 
 remove() {
@@ -31,7 +31,7 @@ remove() {
 
   dotnet sln remove $prefix.{a,b}
   rm -r $prefix.{a,b}
-  git add $prefix.{a,b}
+  git add $prefix.{a,b} *.sln
 }
 
 set_vars() {

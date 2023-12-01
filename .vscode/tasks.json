@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/AoC.2023.sln",
+                "${fileDirname}/${relativeFileDirname}.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/AoC.2023.sln",
+                "${fileDirname}/${relativeFileDirname}.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -32,8 +32,9 @@
             "args": [
                 "watch",
                 "run",
-                "--project",
-                "${workspaceFolder}/AoC.2023.sln"
+                "${fileDirname}/${relativeFileDirname}.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         }

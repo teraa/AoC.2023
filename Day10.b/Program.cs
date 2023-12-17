@@ -5,17 +5,15 @@ var values = GetInput()
         .ToList())
     .ToList();
 
-int sizeY = values.Count;
-int sizeX = values[0].Count;
-
 var points = new List<Point>();
 
-var start = values.Select((row, y) =>
-        row.Select((elem, x) => (y, x, elem))
-            .Where(e => e.elem is Direction.All)
-            .Select(e => new Point(e.x, e.y)))
-    .SelectMany(x => x)
+Point start = values.Select((row, i) => (i, j: row.IndexOf(Direction.All)))
+    .Where(x => x.j >= 0)
+    .Select(x => new Point(x.j, x.i))
     .First();
+
+int sizeY = values.Count;
+int sizeX = values[0].Count;
 
 points.Add(start);
 
@@ -67,6 +65,7 @@ do
     points.Add(next.Value);
     current = next.Value;
 } while (current != start);
+
 points.RemoveAt(points.Count - 1);
 
 // TODO: depends on input

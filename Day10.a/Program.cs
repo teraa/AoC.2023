@@ -5,15 +5,11 @@ var values = GetInput()
         .ToList())
     .ToList();
 
-int size = values.Count;
-
 var points = new List<Point>();
 
-var start = values.Select((row, y) =>
-        row.Select((elem, x) => (y, x, elem))
-            .Where(e => e.elem is Direction.All)
-            .Select(e => new Point(e.x, e.y)))
-    .SelectMany(x => x)
+Point start = values.Select((row, i) => (i, j: row.IndexOf(Direction.All)))
+    .Where(x => x.j >= 0)
+    .Select(x => new Point(x.j, x.i))
     .First();
 
 points.Add(start);
@@ -89,7 +85,7 @@ static Direction OffsetToDirection(Point offset) => offset switch
 };
 
 bool IsInBounds(Point point)
-    => point.X >= 0 && point.X < size && point.Y >= 0 && point.Y < size;
+    => point.X >= 0 && point.X < values[0].Count && point.Y >= 0 && point.Y < values.Count;
 
 static Direction GetPipe(char c) => c switch
 {

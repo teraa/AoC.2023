@@ -29,7 +29,8 @@ public static class Extensions
         where T : IEquatable<T>
         => ChunkBy(source, separator.Equals);
 
-    public static IEnumerable<IReadOnlyList<T>> ChunkBy<T>(this IEnumerable<T> source, Func<T, bool> predicate, bool keepSeparator = false)
+    public static IEnumerable<IReadOnlyList<T>> ChunkBy<T>(this IEnumerable<T> source, Func<T, bool> predicate,
+        bool keepSeparator = false)
     {
         List<T>? chunk = null;
         IReadOnlyList<T> empty = Array.Empty<T>();
@@ -54,4 +55,13 @@ public static class Extensions
 
         yield return chunk ?? empty;
     }
+
+    public static IEnumerable<(int I, int J, T Item)> Flatten<T>(this IEnumerable<IEnumerable<T>> source)
+        => source.SelectMany((line, i) => line.Select((e, j) => (i, j, e)));
+
+    public static Dictionary<(int I, int J), T> Map<T>(this IEnumerable<(int i, int j, T e)> source)
+        => source.ToDictionary(x => (x.i, x.j), x => x.e);
+
+    public static Dictionary<(int I, int J), T> FlatMap<T>(this IEnumerable<IEnumerable<T>> source)
+        => source.Flatten().Map();
 }
